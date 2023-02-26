@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(dirname "$0")/aux/core.bash"
+
+replace() {
+   local -r path="$(which channel || echo "/usr/local/bin/channel")"
+   set -x
+   sudo rm "$path" || true
+   sudo cp "${CHANNEL_HOME}/target/release/channel" "$path"
+}
+
+cargo build --release
+replace
+channel salt

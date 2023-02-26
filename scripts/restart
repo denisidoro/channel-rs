@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(dirname "$0")/aux/core.bash"
+
+export PORT=${PORT:-7879}
+
+_kill() {
+   lsof -i ":${PORT}" \
+   | awk '{l=$2} END {print l}' \
+   | xargs -I% kill -9 %
+}
+
+_launchctl() {
+   set -x
+   launchctl "$1" "${HOME}/Library/LaunchAgents/io.github.denisidoro.channel.plist"
+}
+
+_kill || true
+_launchctl unload || true
+_kill || true
+_launchctl load

@@ -1,0 +1,38 @@
+[package]
+name = "channel"
+version = "0.3.2"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+btleplug = "0.10.1"
+dns_common_derive = { version = "0.2.0" }
+dns_common = { version = "0.2.0", default-features = false, features = ["yaml", "json"] }
+futures = "0.3.25"
+tokio = { version = "1.21.1", features = ["io-std", "io-util", "macros", "rt", "rt-multi-thread", "process"] }
+tokio-stream = { version = "0.1.10", features = ["sync", "io-util"] }
+uuid = "1.2.1"
+# regex = { version = "1.5.4", default-features = false, features = ["std", "unicode-perl"] }
+clap = { version = "3", features = ["derive"] }
+# walkdir = "2"
+# workerpool = "1.2.0"
+once_cell = "1.10.0"
+# isahc = { version = "1.7.2", default-features = false , features = ["http2", "static-curl", "text-decoding"] }
+# reqwest = { version = "0.11.0", default-features = false, features = ["blocking", "gzip", "rustls-tls"] }
+derive_more = "0.99.16"
+# dns_common_derive = { path = "../dns_common_derive" }
+# dns_common = { path = "../dns_common", default-features = false, features = ["yaml", "json"] }
+serde = { version = "1.0" } # TODO: try to remove somehow
+# serde_derive = "1.0.137"
+# anyhow = "1.0.55"
+# chrono = "0.4"
+
+[lib]
+name = "channel"
+path = "src/lib.rs"
+
+[[bin]]
+name = "channel"
+path = "src/bin/main.rs"
+bench = false
