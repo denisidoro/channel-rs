@@ -1,8 +1,16 @@
+use dns_common::prelude::*;
 use once_cell::sync::Lazy;
 use std::env;
 
 pub const IP: &str = "0.0.0.0";
-pub const PORT: u16 = 7879;
+
+pub fn port() -> Result<u16> {
+    match env::var("PORT") {
+        Ok(p) => p.parse().context("invalid $PORT"),
+        Err(_) => Ok(7879),
+    }
+}
+
 pub const TIME_MOD: usize = 15;
 pub const DOT_ARGS: &[&str] = &["channel", "handle-tcp"];
 
