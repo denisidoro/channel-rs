@@ -14,7 +14,7 @@ pub fn serve() -> Result<()> {
         return Err(anyhow!("$DOTFILES empty"));
     }
 
-    let address = format!("{}:{}", config::IP, config::PORT);
+    let address = format!("{}:{}", config::IP, config::port()?);
     let listener = TcpListener::bind(address)?;
 
     for stream in listener.incoming() {
