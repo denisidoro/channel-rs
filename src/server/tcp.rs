@@ -15,7 +15,8 @@ pub fn serve() -> Result<()> {
     }
 
     let address = format!("{}:{}", config::IP, config::port()?);
-    let listener = TcpListener::bind(address)?;
+    let listener = TcpListener::bind(&address)?;
+    eprintln!("listening to {address}");
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
