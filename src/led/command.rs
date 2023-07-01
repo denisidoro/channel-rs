@@ -4,8 +4,8 @@ use super::terminal;
 use crate::prelude::*;
 use crate::utils::color::hsl_to_rgb;
 use clap::Args;
-use futures::executor;
-use uuid::Uuid;
+
+
 
 #[derive(Debug, Clone, Args)]
 pub struct Input {

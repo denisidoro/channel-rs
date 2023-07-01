@@ -1,4 +1,4 @@
-use super::{payload, Device};
+use super::{payload};
 use crate::prelude::*;
 use payload::{Command, Payload};
 
