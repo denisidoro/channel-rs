@@ -23,7 +23,7 @@ impl ClapConfig {
     pub fn new(args: Option<Vec<&str>>) -> Result<Self> {
         // dbg!(&args);
         match args {
-            Some(a) => Self::try_parse_from(&a).map_err(|e| e.into()),
+            Some(a) => Self::try_parse_from(a).map_err(|e| e.into()),
             None => Self::try_parse().map_err(|e| e.into()),
         }
     }
