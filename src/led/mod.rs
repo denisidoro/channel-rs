@@ -1,5 +1,3 @@
-
-
 // mod ble;
 pub mod command;
 mod payload;
