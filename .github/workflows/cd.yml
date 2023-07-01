@@ -54,7 +54,7 @@ jobs:
 
     - uses: hecrj/setup-rust-action@v1.3.4
       with:
-        rust-version: stable
+        rust-version: 1.67.0
 
     - name: Build
       id: build
