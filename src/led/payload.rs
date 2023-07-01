@@ -1,4 +1,4 @@
-#[derive(Clone, Debug)] // TODO: remove clone
+#[derive(Clone, Debug, PartialEq, Eq)] // TODO: remove clone
 pub enum Command {
     Brightness(u8),
     Speed(u8),

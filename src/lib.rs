@@ -5,6 +5,7 @@ mod config;
 pub mod led;
 pub mod prelude;
 pub mod server;
+pub mod utils;
 
 use dns_common::tracing;
 use prelude::*;

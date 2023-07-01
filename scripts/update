@@ -12,4 +12,4 @@ replace() {
 
 cargo build --release
 replace
-channel salt
+channel server salt

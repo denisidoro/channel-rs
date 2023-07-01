@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(dirname "$0")/aux/core.bash"
+
+ping() {
+   curl "localhost:7879/execute" -d 'ping' -vvv
+}
+
+_payload() {
+   local -r from="curl"
+   local -r type="$1"
+   local -r data="${2:-}"
+
+   local -r pass="$(dot store get channel.password)"
+   local -r body="$(PASSWORD="$pass" channel server encrypt "$from" "$type" "$data")"
+   
+   curl "localhost:7879/execute" -d "$body" -vvv
+}
+
+main() {
+   if [ $# -eq 0 ]; then
+      ping
+      return
+   fi
+
+   local -r fn="$1"
+   shift || true
+   case "$fn" in
+      ping) ping;;
+      rickroll) _payload rickroll;;
+      *) _payload "$@" ;;
+   esac
+}
+
+main "$@"

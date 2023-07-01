@@ -1,6 +1,6 @@
 use uuid::Uuid;
 
-mod ble;
+// mod ble;
 pub mod command;
 mod payload;
 mod terminal;
