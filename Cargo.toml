@@ -1,6 +1,6 @@
 [package]
 name = "channel"
-version = "0.3.2"
+version = "0.4.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -9,9 +9,9 @@ edition = "2021"
 # btleplug = "0.10.1"
 dns_common_derive = { version = "0.2.0" }
 dns_common = { version = "0.2.0", default-features = false, features = ["yaml", "json"] }
-futures = "0.3.25"
-tokio = { version = "1.21.1", features = ["io-std", "io-util", "macros", "rt", "rt-multi-thread", "process"] }
-tokio-stream = { version = "0.1.10", features = ["sync", "io-util"] }
+# futures = "0.3.25"
+# tokio = { version = "1.21.1", features = ["io-std", "io-util", "macros", "rt", "rt-multi-thread", "process"] }
+# tokio-stream = { version = "0.1.10", features = ["sync", "io-util"] }
 uuid = "1.2.1"
 # regex = { version = "1.5.4", default-features = false, features = ["std", "unicode-perl"] }
 clap = { version = "3", features = ["derive"] }

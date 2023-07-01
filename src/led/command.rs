@@ -1,13 +1,20 @@
 use super::payload::Command::{self, *};
 use super::terminal;
 // use super::{ble, Device};
+use super::color::hsl_to_rgb;
 use crate::prelude::*;
-use crate::utils::color::hsl_to_rgb;
 use clap::Args;
+use clap::Subcommand;
+
+#[derive(Subcommand, Debug, Clone)]
+pub enum SubCmd {
+    Print { commands: String },
+}
 
 #[derive(Debug, Clone, Args)]
 pub struct Input {
-    commands: String,
+    #[clap(subcommand)]
+    subcmd: SubCmd,
     // mac: String,
     // peripheral: Uuid,
     // service: Uuid,
@@ -18,20 +25,24 @@ pub struct Input {
 
 impl Runnable for Input {
     fn run(&self, _system: System) -> Result<()> {
-        let command_vec = string_to_commands(&self.commands);
-        // let device = Device {
-        //     mac: self.mac.clone(),
-        //     peripheral: self.peripheral,
-        //     service: self.service,
-        //     characteristic: self.characteristic,
-        // };
-        // if self.print {
-        terminal::main(command_vec)?;
-        // } else {
-        //     executor::block_on(ble::main(command_vec, device))?;
-        // }
-        Ok(())
+        match &self.subcmd {
+            SubCmd::Print { commands } => {
+                let command_vec = string_to_commands(commands);
+                terminal::main(command_vec)?;
+                Ok(())
+            }
+        }
     }
+    // let device = Device {
+    //     mac: self.mac.clone(),
+    //     peripheral: self.peripheral,
+    //     service: self.service,
+    //     characteristic: self.characteristic,
+    // };
+    // if self.print {
+    // } else {
+    //     executor::block_on(ble::main(command_vec, device))?;
+    // }
 }
 
 impl HasDeps for Input {}
@@ -185,14 +196,14 @@ fn string_to_command(txt: &str) -> Result<Command> {
                 let g = u8::from_str_radix(&txt[3..5], 16)?;
                 let b = u8::from_str_radix(&txt[5..7], 16)?;
                 Ok(Rgb(r, g, b))
-            } else if txt.starts_with("rgb(") {
-                let mut parts = txt[4..txt.len() - 1].split(',');
+            } else if txt.starts_with("rgb") {
+                let mut parts = txt[4..txt.len()].split(' ');
                 let r: u8 = parts.next().context("no R part")?.trim().parse()?;
                 let g: u8 = parts.next().context("no G part")?.trim().parse()?;
                 let b: u8 = parts.next().context("no B part")?.trim().parse()?;
                 Ok(Rgb(r, g, b))
-            } else if txt.starts_with("hsl(") {
-                let mut parts = txt[4..txt.len() - 1].split(',');
+            } else if txt.starts_with("hsl") {
+                let mut parts = txt[4..txt.len()].split(' ');
                 let h: f32 = parts.next().context("no H part")?.trim().parse()?;
                 let s: f32 = parts.next().context("no S part")?.trim().parse()?;
                 let l: f32 = parts.next().context("no L part")?.trim().parse()?;
@@ -226,8 +237,8 @@ mod tests {
     fn test_payload() {
         let cases = [
             ("#AA01FF", Rgb(170, 1, 255)),
-            ("rgb(170 ,1, 255)", Rgb(170, 1, 255)),
-            ("hsl(325, 50.9, 44.7)", Rgb(172, 55, 123)),
+            ("rgb 170 1 255", Rgb(170, 1, 255)),
+            ("hsl 325 50.9 44.7", Rgb(172, 55, 123)),
             ("b32", Brightness(32)),
         ];
         for (input, expected) in cases {

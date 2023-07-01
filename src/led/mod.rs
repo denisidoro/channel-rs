@@ -1,4 +1,5 @@
 // mod ble;
+mod color;
 pub mod command;
 mod payload;
 mod terminal;
