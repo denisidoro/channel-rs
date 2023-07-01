@@ -5,8 +5,6 @@ use crate::prelude::*;
 use crate::utils::color::hsl_to_rgb;
 use clap::Args;
 
-
-
 #[derive(Debug, Clone, Args)]
 pub struct Input {
     commands: String,
